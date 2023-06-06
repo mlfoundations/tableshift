@@ -1,0 +1,40 @@
+name: tableshift
+channels:
+  - defaults
+dependencies:
+  - python=3.8
+  - pip
+  - pip:
+    - numpy==1.23.5
+    - ray==2.2
+    - ray[air]
+    - ray[tune]
+    - torch
+    - torchvision
+    - scikit-learn
+    - pandas
+    - lightgbm
+    - xgboost
+    - fairlearn 
+    - folktables
+    - frozendict
+    - git+https://github.com/jpgard/rtdl.git
+    - xport
+    - -e .
+    - tqdm
+    - hyperopt
+    - xgboost_ray
+    - lightgbm_ray
+    - h5py
+    - tables
+    - category_encoders
+    - catboost
+    - einops
+    - tab-transformer-pytorch
+    - datasets
+    - openpyxl
+    - tune_sklearn
+    - optuna
+    - kaggle
+    - torchinfo
+
