@@ -1,21 +1,19 @@
 ![status](https://github.com/jpgard/tableshift/actions/workflows/python-package-conda.yml/badge.svg)
 ![status](https://github.com/jpgard/tableshift/actions/workflows/run-example-script.yml/badge.svg)
 
-[Example scripts README](examples/README.md)
+![tableshift logo](img/tableshift.png)
+
 
 This page provides an overview of the `tableshift` package and its functionality.
 
 # TableShift
 
-TableShift is a benchmarking library for machine learning with tabular data under distribution shift. However, within
-the Python package we
-also provide an interface to (non-shifted, IID) datasets because the abstractions developed in the package are useful
-for storing dataset- and feature-level metadata which is often not available for tabular datasets. The
-package is under active development. If you find an issue, please file a GitHub
-issue in the project repo.
+TableShift is a benchmarking library for machine learning with tabular data under distribution shift. The package is under active development. If you find an issue, please file a GitHub issue in the project repo.
 
 This is an alpha version of TableShift, so the API is **not** guaranteed to
 remain stable (even though we hope it does!).
+
+You can read more about tableshift at [tableshift.org](https://tableshift.org/index.html)
 
 # Quickstart
 
