@@ -3,9 +3,6 @@
 
 ![tableshift logo](img/tableshift.png)
 
-
-This page provides an overview of the `tableshift` package and its functionality.
-
 # TableShift
 
 TableShift is a benchmarking library for machine learning with tabular data under distribution shift. The package is under active development. If you find an issue, please file a GitHub issue in the project repo.
