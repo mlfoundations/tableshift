@@ -13,7 +13,7 @@ TableShift is a benchmarking library for machine learning with tabular data unde
 This is an alpha version of TableShift, so the API is **not** guaranteed to
 remain stable (even though we hope it does!).
 
-You can read more about tableshift at [tableshift.org](https://tableshift.org/index.html)
+You can read more about TableShift at [tableshift.org](https://tableshift.org/index.html)
 
 # Quickstart
 
@@ -24,7 +24,7 @@ a conda environment, simply clone this repo, enter the root directory, and run
 conda env create -f environment.yml
 ```
 
-Then the tableshift environment can be activated
+Then the TableShift environment can be activated
 with `conda activate tableshift`.
 
 Once the TableShift package has been officially released (very soon!) we will also provide a pip-installable version.
