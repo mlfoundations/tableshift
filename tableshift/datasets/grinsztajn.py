@@ -495,7 +495,8 @@ ROAD_SAFETY_FEATURES = FeatureList(features=[
                 110: 'Minibus/Motor caravan (1979-1998)',
                 113: 'Goods over 3.5 tonnes (1979-1998)',
                 -1: 'Data missing or out of range'}),
-    Feature('Vehicle_Manoeuvre', int, 'vehicle maneuver type',
+    Feature('Vehicle_Manoeuvre', int,
+            name_extended='vehicle maneuver type',
             value_mapping={
                 -1: 'Data missing or out of range', 1: 'Reversing', 2: 'Parked',
                 3: 'Waiting to go - held up', 4: 'Slowing or stopping',
