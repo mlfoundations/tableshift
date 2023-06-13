@@ -28,13 +28,12 @@ dependencies:
     - h5py
     - tables
     - category_encoders
-    - catboost
+    - catboost<1.2
     - einops
     - tab-transformer-pytorch
-    - datasets
     - openpyxl
-    - tune_sklearn
     - optuna
     - kaggle
+    - datasets
     - torchinfo
 
