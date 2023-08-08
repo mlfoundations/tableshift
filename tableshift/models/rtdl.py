@@ -9,6 +9,7 @@ from typing import Optional, Callable, Any, Dict, Tuple
 
 import numpy as np
 import rtdl
+from rtdl import FTTransformer, FeatureTokenizer, Transformer
 import scipy
 import torch
 from torch import Tensor
@@ -17,6 +18,28 @@ from torch.utils.data import DataLoader
 from tableshift.models.compat import SklearnStylePytorchModel, OPTIMIZER_ARGS
 from tableshift.models.torchutils import apply_model, get_module_attr
 from tableshift.models.training import train_epoch
+
+class WrappedFTTransformer(FTTransformer):
+    @classmethod
+    def _make(
+            cls,
+            n_num_features,
+            cat_cardinalities,
+            transformer_config,
+    ):
+        feature_tokenizer = FeatureTokenizer(
+            n_num_features=n_num_features,
+            cat_cardinalities=cat_cardinalities,
+            d_token=transformer_config['d_token'],
+        )
+        if transformer_config['d_out'] is None:
+            transformer_config['head_activation'] = None
+        if transformer_config['kv_compression_ratio'] is not None:
+            transformer_config['n_tokens'] = feature_tokenizer.n_tokens + 1
+        return cls(
+            feature_tokenizer,
+            Transformer(**transformer_config),
+        )
 
 
 class SklearnStyleRTDLModel(SklearnStylePytorchModel):
@@ -108,7 +131,7 @@ class MLPModelWithHook(MLPModel):
         return _get_activations(x)
 
 
-class FTTransformerModel(rtdl.FTTransformer, SklearnStyleRTDLModel):
+class FTTransformerModel(WrappedFTTransformer, SklearnStyleRTDLModel):
 
     @property
     def cat_idxs(self):
