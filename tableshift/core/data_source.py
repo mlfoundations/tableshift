@@ -488,7 +488,8 @@ class DiabetesReadmissionDataSource(DataSource):
         # read the dataframe
         df = pd.read_csv(os.path.join(self.cache_dir, "dataset_diabetes",
                                       "diabetic_data.csv"),
-                         na_values="?")
+                         na_values="?",
+                         low_memory=False)
         return df
 
 
