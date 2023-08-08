@@ -23,7 +23,7 @@ conda activate tableshift
 python examples/run_expt.py
 ```
 
-The final line above will print some detailed logging output as the script executes. When you see `training completed! test accuracy: 0.6240` your environment is ready to go!
+The final line above will print some detailed logging output as the script executes. When you see `training completed! test accuracy: 0.6221` your environment is ready to go! (Accuracy may vary slightly due to randomness.)
 
 Once the TableShift package has been officially released (very soon!) we will also provide a pip-installable version.
 

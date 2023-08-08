@@ -1,5 +1,5 @@
 absl-py==1.4.0
-accelerate==0.16.0
+accelerate
 aiohttp==3.8.3
 aiohttp-cors==0.7.0
 aiorwlock==1.3.0
@@ -14,14 +14,6 @@ array-record==0.2.0
 asttokens==2.2.0
 async-timeout==4.0.2
 attrs==22.1.0
-auto-mm-bench @ file:///Users/jpgard/Documents/github/automl_multimodal_benchmark/multimodal_text_benchmark
-autogluon==0.7.0
-autogluon.common==0.7.0
-autogluon.core==0.7.0
-autogluon.features==0.7.0
-autogluon.multimodal==0.7.0
-autogluon.tabular==0.7.0
-autogluon.timeseries==0.7.0
 Babel==2.11.0
 backcall==0.2.0
 beautifulsoup4==4.11.1
@@ -35,7 +27,7 @@ cachetools==5.2.0
 catalogue==2.0.8
 catboost==1.1.1
 category-encoders==2.6.0
-certifi @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_0ek9yztvu3/croot/certifi_1665076692562/work/certifi
+certifi==2022.09.24
 cffi==1.15.1
 charset-normalizer==2.1.1
 click==8.0.4
@@ -67,7 +59,7 @@ evaluate==0.3.0
 exceptiongroup==1.1.0
 executing==1.2.0
 fairlearn==0.8.0
-fairscale==0.4.13
+fairscale
 fastai==2.7.12
 fastapi==0.88.0
 fastcore==1.5.29
@@ -76,13 +68,14 @@ fastjsonschema==2.16.2
 fastprogress==1.0.3
 fasttext==0.9.1
 filelock==3.8.0
-folktables==0.0.11
+folktables
 fonttools==4.38.0
 frozendict==2.3.4
 frozenlist==1.3.3
 fsspec==2022.11.0
 future==0.18.2
 gdown==4.7.1
+git+https://github.com/sxjscience/automl_multimodal_benchmark.git#subdirectory=multimodal_text_benchmark
 gluonts==0.12.6
 google-api-core==2.10.2
 google-auth==2.17.2
@@ -133,8 +126,6 @@ Mako==1.2.4
 Markdown==3.4.3
 markdown-it-py==2.2.0
 MarkupSafe==2.1.1
-matplotlib==3.6.3
-matplotlib-inline==0.1.6
 mdurl==0.1.2
 mistune==2.0.4
 model-index==0.1.11
@@ -154,8 +145,8 @@ nltk==3.8.1
 notebook==6.5.2
 notebook_shim==0.2.2
 nptyping==2.4.1
-numba==0.56.4
-numpy==1.23.5
+numba
+numpy
 nvidia-ml-py==11.495.46
 oauthlib==3.2.2
 omegaconf==2.2.3
@@ -166,7 +157,7 @@ openpyxl==3.1.2
 optuna==3.1.1
 ordered-set==4.1.0
 packaging==21.3
-pandas==1.5.3
+pandas
 pandocfilters==1.5.0
 parso==0.8.3
 pathy==0.10.1
@@ -184,7 +175,6 @@ preshed==3.0.8
 prometheus-client==0.13.1
 promise==2.3
 prompt-toolkit==3.0.33
-protobuf==4.23.2
 psutil==5.9.4
 ptyprocess==0.7.0
 pure-eval==0.2.2
@@ -229,35 +219,25 @@ s3transfer==0.6.0
 scikit-image==0.19.3
 scikit-learn==1.1.3
 scipy==1.9.3
-seaborn==0.12.2
 Send2Trash==1.8.0
 sentencepiece==0.1.97
 seqeval==1.2.2
 six==1.16.0
-sklearn==0.0.post1
-sktime==0.15.1
+scikit-learn==1.1.3
 smart-open==6.2.0
 sniffio==1.3.0
 soupsieve==2.3.2.post1
-spacy==3.5.1
-spacy-legacy==3.0.12
-spacy-loggers==1.0.4
+spacy
 SQLAlchemy==2.0.9
 srsly==2.4.6
 stack-data==0.6.2
 starlette==0.22.0
 statsforecast==1.4.0
-statsmodels==0.13.5
+statsmodels
 tab-transformer-pytorch==0.2.1
--e git+https://github.com/jpgard/tableshift.git@3711880efe3cb639530f4c08c3ee0cac2e1125d6#egg=tablebench
-tableshift==0.0
 tabulate==0.9.0
 tbats==1.1.2
 tenacity==8.2.2
-tensorboard==2.12.1
-tensorboard-data-server==0.7.0
-tensorboard-plugin-wit==1.8.1
-tensorboardX==2.5.1
 tensorflow-datasets==4.9.2
 tensorflow-metadata==1.13.1
 termcolor==2.3.0
@@ -298,7 +278,7 @@ wrapt==1.14.1
 xarray==2023.1.0
 xgboost==1.7.1
 xgboost-ray==0.1.12
-xport==3.6.1
+xport
 xxhash==3.2.0
 yacs==0.1.8
 yarl==1.8.1
