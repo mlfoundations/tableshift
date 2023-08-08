@@ -15,26 +15,29 @@ You can read more about TableShift at [tableshift.org](https://tableshift.org/in
 # Quickstart
 
 **Environment setup:** We recommend the use of conda with TableShift. To create
-a conda environment, simply clone this repo, enter the root directory, and run
+a conda environment, simply clone this repo, enter the root directory, and run the following commands to create and test a local execution environment:
 
 ``` 
 conda env create -f environment.yml
+conda activate tableshift
+python examples/run_expt.py
 ```
 
-Then the TableShift environment can be activated
-with `conda activate tableshift`.
+The final line above will print some detailed logging output as the script executes. When you see `training completed! test accuracy: 0.6240` your environment is ready to go!
 
 Once the TableShift package has been officially released (very soon!) we will also provide a pip-installable version.
 
 **Accessing datasets:** If you simply want to load and use a standard version of
-one of the TableShift datasets, it's as simple as:
+one of the public TableShift datasets, it's as simple as:
 
 ``` 
 from tableshift import get_dataset
-dset = get_dataset(experiment)
+
+dataset_name = "diabetes_readmission"
+dset = get_dataset(dataset_name)
 ```
 
-The full list of identifiers for all available datasets is below.
+The full list of identifiers for all available datasets is below; simply swap any of these for `dataset_name` to access the relevant data.
 
 If you would like to use a dataset *without* a domain split, replace `get_dataset()` with `get_iid_dataset()`.
 
