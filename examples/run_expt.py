@@ -3,7 +3,7 @@ import logging
 
 from sklearn.metrics import accuracy_score
 
-from tableshift.core import get_dataset
+from tableshift import get_dataset
 from tableshift.models.training import train
 from tableshift.models.utils import get_estimator
 
