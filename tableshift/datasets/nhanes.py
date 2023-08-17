@@ -1,6 +1,14 @@
 """
 NHANES-related tools. See also the documentation at the link below:
 https://www.cdc.gov/Nchs/Nhanes/about_nhanes.htm
+
+NHANES is a public data source and no special action is required
+to access it.
+
+For more information on datasets and access in TableShift, see:
+* https://tableshift.org/datasets.html
+* https://github.com/mlfoundations/tableshift
+
 """
 import json
 import logging

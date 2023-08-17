@@ -1,3 +1,15 @@
+"""
+Utilities for the HELOC dataset.
+
+This is a public credentialized access data source and
+requires obtaining access through a data use agreement.
+
+For more information on datasets and access in TableShift, see:
+* https://tableshift.org/datasets.html
+* https://github.com/mlfoundations/tableshift
+
+"""
+
 import pandas as pd
 
 from tableshift.core.features import Feature, FeatureList, cat_dtype

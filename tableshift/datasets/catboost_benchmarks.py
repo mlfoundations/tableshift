@@ -1,6 +1,10 @@
 """
 CatBoost quality benchmarks; adapted from
 https://github.com/catboost/benchmarks/tree/master/quality_benchmarks
+
+For more information on datasets and access TableShift, see:
+* https://tableshift.org/datasets.html
+* https://github.com/mlfoundations/tableshift
 """
 import re
 

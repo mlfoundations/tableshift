@@ -1,6 +1,12 @@
 """
-
 Utilities for working with BRFSS dataset.
+
+This is a public data source and no special action is required
+to access it.
+
+For more information on datasets and access in TableShift, see:
+* https://tableshift.org/datasets.html
+* https://github.com/mlfoundations/tableshift
 
 Accessed via https://www.kaggle.com/datasets/cdc/behavioral-risk-factor-surveillance-system.
 Raw Data: https://www.cdc.gov/brfss/annual_data/annual_data.htm

@@ -1,3 +1,11 @@
+"""
+Utilities for the Harvardx-MITx MOOC datasets.
+
+For more information on datasets and access in TableShift, see:
+* https://tableshift.org/datasets.html
+* https://github.com/mlfoundations/tableshift
+"""
+
 from datetime import datetime
 
 import numpy as np

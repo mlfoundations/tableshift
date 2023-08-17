@@ -1,3 +1,13 @@
+"""
+Utilities for the College Scorecard dataset.
+
+This is a public data source and no special action is required
+to access it.
+
+For more information on datasets and access in TableShift, see:
+* https://tableshift.org/datasets.html
+* https://github.com/mlfoundations/tableshift
+"""
 import pandas as pd
 from tableshift.core.features import Feature, FeatureList, cat_dtype
 

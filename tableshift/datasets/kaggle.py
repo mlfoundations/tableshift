@@ -1,5 +1,9 @@
 """
-Kaggle competition data sources.
+Utilities for Kaggle competition data sources.
+
+For more information on datasets and access in TableShift, see:
+* https://tableshift.org/datasets.html
+* https://github.com/mlfoundations/tableshift
 """
 import pandas as pd
 

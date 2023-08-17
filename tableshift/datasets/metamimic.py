@@ -1,3 +1,14 @@
+"""
+Utilities for MetaMIMIC datasets.
+
+MetaMIMIC requires access to the MIMIC dataset, which is a public
+credentialized dataset. Obtain access from the Physionet website.
+See the instructions at the links below.
+
+For more information on datasets and access in TableShift, see:
+* https://tableshift.org/datasets.html
+* https://github.com/mlfoundations/tableshift
+"""
 from tableshift.core.features import Feature, FeatureList
 
 METAMIMIC_FEATURES = FeatureList(features=[

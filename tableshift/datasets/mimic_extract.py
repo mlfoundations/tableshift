@@ -1,3 +1,15 @@
+"""
+Utilities for the MIMIC-Extract dataset.
+
+MIMIC-Extract requires access to the MIMIC dataset, which is a public
+credentialized dataset. Obtain access from the Physionet website.
+See the instructions at the links below.
+
+For more information on datasets and access in TableShift, see:
+* https://tableshift.org/datasets.html
+* https://github.com/mlfoundations/tableshift
+"""
+
 import logging
 from typing import List, Union
 

@@ -1,6 +1,10 @@
 """
 Utilities for ANES Time Series Cumulative Data File.
 
+For more information on datasets and access in TableShift, see:
+* https://tableshift.org/datasets.html
+* https://github.com/mlfoundations/tableshift
+
 List of variables: https://electionstudies.org/wp-content/uploads/2019/09/anes_timeseries_cdf_codebook_Varlist.pdf
 Codebook: https://electionstudies.org/wp-content/uploads/2022/09/anes_timeseries_cdf_codebook_var_20220916.pdf
 """

@@ -1,3 +1,13 @@
+"""
+Feature specs and preprocessing for data from the American Community Survey.
+
+This is a public data source and no special action is required
+to access it.
+
+For more information on datasets and access in TableShift, see:
+* https://tableshift.org/datasets.html
+* https://github.com/mlfoundations/tableshift
+"""
 from dataclasses import dataclass
 from typing import Callable, Union
 
@@ -70,7 +80,6 @@ DIS_FEATURE = Feature('DIS', cat_dtype, "Disability recode",
                       value_mapping={'01': 'With a disability',
                                      '02': 'Without a disability'})
 
-# TODO(jpgard): complete mapping for this feature.
 OCCP_FEATURE = Feature('OCCP', cat_dtype,
                        "Occupation recode for 2018 and later based on 2018 OCC codes",
                        name_extended="Occupation")

@@ -1,5 +1,13 @@
 """
-UCI datasets.
+Utilities for various UCI repository datasets.
+
+This is a public data source and no special action is required
+to access it.
+
+For more information on datasets and access in TableShift, see:
+* https://tableshift.org/datasets.html
+* https://github.com/mlfoundations/tableshift
+
 """
 import pandas as pd
 

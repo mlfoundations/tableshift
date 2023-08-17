@@ -1,3 +1,9 @@
+"""
+
+For more information on datasets and access in TableShift, see:
+* https://tableshift.org/datasets.html
+* https://github.com/mlfoundations/tableshift
+"""
 import numpy as np
 from pandas import DataFrame
 

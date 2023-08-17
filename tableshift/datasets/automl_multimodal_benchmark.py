@@ -1,5 +1,13 @@
 """
 Datasets from the AutoML benchmark at https://github.com/sxjscience/automl_multimodal_benchmark .
+
+This is a public data source and no special action is required
+to access it.
+
+For more information on datasets and access in TableShift, see:
+* https://tableshift.org/datasets.html
+* https://github.com/mlfoundations/tableshift
+
 """
 from typing import Sequence
 from pandas import DataFrame
