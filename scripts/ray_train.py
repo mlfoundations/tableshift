@@ -36,11 +36,14 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S')
 
 
-def main(experiment: str, cache_dir: str,
+def main(experiment: str,
+         cache_dir: str,
          ray_tmp_dir: str,
          ray_local_dir: str,
          debug: bool,
-         no_tune: bool, num_samples: int, search_alg: str,
+         no_tune: bool,
+         num_samples: int,
+         search_alg: str,
          use_cached: bool,
          results_dir: str,
          max_concurrent_trials: int,
