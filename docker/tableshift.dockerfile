@@ -13,3 +13,5 @@ RUN python -m pip install --no-deps .
 # Add tableshift to pythonpath; necessary to ensure
 # tableshift module imports work inside docker.
 ENV PYTHONPATH "${PYTHONPATH}:/tableshift"
+
+ENTRYPOINT [ "python", "examples/run_expt.py"]
