@@ -1,11 +1,14 @@
 import argparse
 import logging
 
+import torch
 from sklearn.metrics import accuracy_score
 
 from tableshift.core import get_dataset
 from tableshift.models.training import train
 from tableshift.models.utils import get_estimator
+from tableshift.models.default_hparams import get_default_config
+
 
 LOG_LEVEL = logging.DEBUG
 
@@ -23,15 +26,23 @@ def main(experiment, cache_dir, model, debug: bool):
 
     dset = get_dataset(experiment, cache_dir)
     X, y, _, _ = dset.get_pandas("train")
-    estimator = get_estimator(model)
-    estimator = train(estimator, dset)
-    if dset.is_domain_split:
-        X_te, y_te, _, _ = dset.get_pandas("ood_test")
+    config = get_default_config(model, dset)
+    estimator = get_estimator(model, **config)
+    estimator = train(estimator, dset, config=config)
+
+    if not isinstance(estimator, torch.nn.Module):
+        # Case: non-pytorch estimator; perform test-split evaluation.
+        test_split = "ood_test" if dset.is_domain_split else "test"
+        # Fetch predictions and labels for a sklearn model.
+        X_te, y_te, _, _ = dset.get_pandas(test_split)
+        yhat_te = estimator.predict(X_te)
+    
+        acc = accuracy_score(y_true=y_te, y_pred=yhat_te)
+        print(f"training completed! {test_split} accuracy: {acc:.4f}")
+    
     else:
-        X_te, y_te, _, _ = dset.get_pandas("test")
-    yhat_te = estimator.predict(X_te)
-    acc = accuracy_score(y_true=y_te, y_pred=yhat_te)
-    print(f"training completed! test accuracy: {acc:.4f}")
+        # Case: pytorch estimator; eval is already performed + printed by train().
+        print("training completed!")
     return
 
 
