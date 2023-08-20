@@ -140,14 +140,15 @@ _DEFAULT_CONFIGS = frozendict({
 
 
 def get_default_config(model: str, dset: TabularDataset) -> dict:
-    """Get a default config for a model by name."""
+    """Get a default config for a model, by name."""
     config = _DEFAULT_CONFIGS.get(model, {})
+    model_is_pt = is_pytorch_model_name(model)
 
     d_in = dset.X_shape[1]
-    if is_pytorch_model_name(model) and model != "ft_transformer":
+    if model_is_pt and model != "ft_transformer":
         config.update({"d_in": d_in,
                        "activation": "ReLU"})
-    elif is_pytorch_model_name(model):
+    elif model_is_pt:
         config.update({"n_num_features": d_in})
 
     if model in ("tabtransformer", "saint"):
@@ -155,7 +156,7 @@ def get_default_config(model: str, dset: TabularDataset) -> dict:
         config["cat_idxs"] = cat_idxs
         config["categories"] = [2] * len(cat_idxs)
 
-    # Models that use non-cross-entropy training objectives.
+    # Set the training objective and any associated hypperparameters.
     if model == "dro":
         config["criterion"] = DROLoss(size=config["size"],
                                       reg=config["reg"],
@@ -170,10 +171,10 @@ def get_default_config(model: str, dset: TabularDataset) -> dict:
         config["criterion"] = GroupDROLoss(n_groups=2)
 
 
-    else:
+    elif model_is_pt:
         config["criterion"] = F.binary_cross_entropy_with_logits
 
-    if is_pytorch_model_name(model) and model != "dann":
+    if model_is_pt and model != "dann":
         # Note: for DANN model, lr and weight decay are set separately for D
         # and G.
         config.update({"lr": 0.01,
@@ -182,9 +183,9 @@ def get_default_config(model: str, dset: TabularDataset) -> dict:
 
     # Do not overwrite batch size or epochs if they are set in the default
     # config for the model.
-    if "batch_size" not in config:
+    if "batch_size" not in config and model_is_pt:
         config["batch_size"] = DEFAULT_BATCH_SIZE
-    if "n_epochs" not in config:
+    if "n_epochs" not in config and model_is_pt:
         config["n_epochs"] = 1
 
     if model == "saint" and d_in > 100:
