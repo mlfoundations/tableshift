@@ -16,7 +16,7 @@ from pandas import DataFrame, Series
 from torch.utils.data import DataLoader
 
 from tableshift.third_party.domainbed import InfiniteDataLoader
-from .features import Preprocessor, PreprocessorConfig
+from .features import Preprocessor, PreprocessorConfig, is_categorical
 from .grouper import Grouper
 from .metrics import metrics_by_group
 from .splitter import Splitter, DomainSplitter
@@ -79,7 +79,7 @@ class Dataset(ABC):
     @property
     def is_domain_split(self) -> bool:
         """Return True if this dataset uses a DomainSplitter, else False."""
-        return self.domain_label_colname is not None
+        return isinstance(self.splitter, DomainSplitter)
 
     @property
     def eval_split_names(self) -> Tuple:
@@ -93,10 +93,7 @@ class Dataset(ABC):
 
     @property
     def domain_split_varname(self):
-        if not self.is_domain_split:
-            return None
-
-        elif isinstance(self.splitter, DomainSplitter):
+        if isinstance(self.splitter, DomainSplitter):
             return self.splitter.domain_split_varname
         else:
             return self.domain_label_colname
@@ -255,8 +252,7 @@ class TabularDataset(Dataset):
 
     @property
     def cat_idxs(self) -> List[int]:
-        # TODO: implement this.
-        raise
+        return [i for i, col in enumerate(self._df.columns) if is_categorical(self._df[col])]
 
     def get_domains(self, split) -> Union[List[str], None]:
         """Fetch a list of the domains."""
