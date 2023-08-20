@@ -4,6 +4,7 @@ channels:
 dependencies:
   - python=3.8
   - pip
+  - lightgbm=3.3
   - pip:
     - -r requirements.txt
     - -e .
