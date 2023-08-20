@@ -22,7 +22,21 @@ from tableshift.models.tab_transformer import TabTransformerModel
 from tableshift.models.wcs import WeightedCovariateShiftClassifier
 
 
-def get_estimator(model, d_out=1, **kwargs):
+def get_estimator(model:str, d_out=1, **kwargs):
+    """
+    Fetch an estimator for training.
+
+    Args:
+        model: the string name of the model to use.
+        d_out: output dimension of the model (set to 1 for binary classification).
+        kwargs: named arguments to pass to the model's class constructor. These
+            vary by model; for more details see below. Note that only a specific
+            subset of the kwargs will be used; passing arbitrary kwargs not accepted by
+            the model's class constructor will result in those kwargs being ignored.
+    Returns:
+        An instance of the class specified by the `model` string, with
+            any hyperparameters set according to kwargs.
+    """
     if model == "aldro":
         assert d_out == 1, "assume binary classification."
         return AdversarialLabelDROModel(

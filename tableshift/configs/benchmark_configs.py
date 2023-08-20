@@ -7,8 +7,7 @@ All other configs are in non_benchmark_configs.py.
 from tableshift.configs.experiment_config import ExperimentConfig
 from tableshift.configs.experiment_defaults import DEFAULT_ID_TEST_SIZE, \
     DEFAULT_OOD_VAL_SIZE, DEFAULT_ID_VAL_SIZE, DEFAULT_RANDOM_STATE
-from tableshift.core import RandomSplitter, Grouper, PreprocessorConfig, \
-    DomainSplitter
+from tableshift.core import Grouper, PreprocessorConfig, DomainSplitter
 from tableshift.datasets import BRFSS_YEARS, ACS_YEARS, NHANES_YEARS
 from tableshift.datasets.mimic_extract import MIMIC_EXTRACT_STATIC_FEATURES
 from tableshift.datasets.mimic_extract_feature_lists import \

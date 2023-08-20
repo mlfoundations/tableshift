@@ -140,7 +140,10 @@ def is_domain_adaptation_model_name(model_name: str) -> bool:
 def is_pytorch_model_name(model: str) -> bool:
     """Helper function to determine whether a model name is a pytorch model.
 
-    ISee description of is_pytorch_model() above."""
+    See description of is_pytorch_model() above."""
+    if model=="catboost":
+        logging.warning("Catboost models are not suported in Ray hyperparameter training."
+                        " Instead, use the provided catboost-specific script.")
     is_sklearn = model in SKLEARN_MODEL_NAMES
     is_pt = model in PYTORCH_MODEL_NAMES
     assert is_sklearn or is_pt, f"unknown model name {model}"

@@ -120,10 +120,13 @@ def get_eval_loaders(
 
 
 def _train_pytorch(estimator: SklearnStylePytorchModel, dset: TabularDataset,
-                   device: str,
                    config=PYTORCH_DEFAULTS,
+                   device: str=None,
                    tune_report_split: str = None):
     """Helper function to train a pytorch estimator."""
+    if not device:
+        device = f"cuda:{torch.cuda.current_device()}" \
+             if torch.cuda.is_available() else "cpu"
     logging.debug(f"config is {config}")
     logging.debug(f"estimator is of type {type(estimator)}")
     logging.debug(f"dset name is {dset.name}")
