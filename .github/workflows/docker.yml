@@ -1,0 +1,10 @@
+on: [push]
+
+jobs:
+  tableshift_docker_job:
+    runs-on: ubuntu-latest
+    name: A job to test the docker image.
+    steps:
+      - name: Docker action step
+        id: tableshift
+        uses: ghcr.io/mlfoundations/tableshift:latest
