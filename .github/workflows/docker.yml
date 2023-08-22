@@ -7,4 +7,4 @@ jobs:
     steps:
       - name: Docker action step
         id: tableshift
-        uses: docker://ghcr.io/mlfoundations/tableshift:latest
+        uses: docker://ghcr.io/jpgard/tableshift:latest
