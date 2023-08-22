@@ -21,7 +21,7 @@ You can read more about TableShift at [tableshift.org](https://tableshift.org/in
 docker pull ghcr.io/jpgard/tableshift:latest
 
 # run it to test your setup; this automatically launches examples/run_expt.py
-docker run ghcr.io/jpgard/tableshift:latest
+docker run ghcr.io/jpgard/tableshift:latest --model xgb
 
 # optionally, use the container interactively
 docker run -it --entrypoint=/bin/bash ghcr.io/jpgard/tableshift:latest
