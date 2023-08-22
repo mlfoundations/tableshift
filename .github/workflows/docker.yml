@@ -1,3 +1,5 @@
+name: TableShift Docker Image
+
 on: [push]
 
 jobs:
