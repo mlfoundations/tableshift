@@ -14,8 +14,21 @@ You can read more about TableShift at [tableshift.org](https://tableshift.org/in
 
 # Quickstart
 
-**Environment setup:** We recommend the use of conda with TableShift. To create
-a conda environment, simply clone this repo, enter the root directory, and run the following commands to create and test a local execution environment:
+**Environment setup:** We recommend the use of docker with TableShift. Our dataset construction and model pipelines have a diverse set of dependencies that included non-Python files required to make some libraries work. As a result, we recommend you use the provided Docker image for using the benchmark, and suggest forking this Docker image for your own development.
+
+``` 
+# fetch the docker image
+docker pull ghcr.io/jpgard/tableshift:latest
+
+# run it to test your setup; this automatically launches examples/run_expt.py
+docker run ghcr.io/jpgard/tableshift:latest
+
+# optionally, use the container interactively
+docker run -it --entrypoint=/bin/bash ghcr.io/jpgard/tableshift:latest
+
+```
+
+**Conda:** To create a conda environment, simply clone this repo, enter the root directory, and run the following commands to create and test a local execution environment:
 
 ``` 
 conda env create -f environment.yml
@@ -24,8 +37,6 @@ python examples/run_expt.py
 ```
 
 The final line above will print some detailed logging output as the script executes. When you see `training completed! test accuracy: 0.6221` your environment is ready to go! (Accuracy may vary slightly due to randomness.)
-
-Once the TableShift package has been officially released (very soon!) we will also provide a pip-installable version.
 
 **Accessing datasets:** If you simply want to load and use a standard version of
 one of the public TableShift datasets, it's as simple as:
