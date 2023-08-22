@@ -9,6 +9,7 @@ from tableshift.models.compat import OPTIMIZER_ARGS
 from tableshift.models.coral import DeepCoralModel, MMDModel
 from tableshift.models.dann import DANNModel
 from tableshift.models.dro import (DomainGroupDROModel,
+                                    DomainGroupDROResNetModel,
                                    AdversarialLabelDROModel,
                                    LabelGroupDROModel)
 from tableshift.models.expgrad import ExponentiatedGradient
@@ -194,6 +195,23 @@ def get_estimator(model:str, d_out=1, **kwargs):
             normalization='BatchNorm1d',
             activation=kwargs["activation"],
             d_out=d_out,
+            **{k: kwargs[k] for k in OPTIMIZER_ARGS},
+        )
+
+    elif model == "group_dro_resnet":
+        d_hidden = kwargs["d_main"] * kwargs["hidden_factor"]
+        return DomainGroupDROResNetModel(
+            d_in=kwargs["d_in"],
+            n_blocks=kwargs["n_blocks"],
+            d_main=kwargs["d_main"],
+            d_hidden=d_hidden,
+            dropout_first=kwargs["dropout_first"],
+            dropout_second=kwargs["dropout_second"],
+            normalization='BatchNorm1d',
+            activation=kwargs["activation"],
+            d_out=d_out,
+            group_weights_step_size=kwargs["group_weights_step_size"],
+            n_groups=kwargs["n_groups"],
             **{k: kwargs[k] for k in OPTIMIZER_ARGS},
         )
 

@@ -117,7 +117,7 @@ class SklearnStylePytorchModel(ABC, nn.Module):
 DOMAIN_GENERALIZATION_MODEL_NAMES = ["dann", "deepcoral", "irm", "mixup", "mmd",
                                      "vrex"]
 DOMAIN_ADAPTATION_MODEL_NAMES = []
-DOMAIN_ROBUSTNESS_MODEL_NAMES = ["group_dro", "dro"]
+DOMAIN_ROBUSTNESS_MODEL_NAMES = ["group_dro", "dro", "group_dro_resnet", "group_dro_ft_transformer", "group_dro_node"]
 LABEL_ROBUSTNESS_MODEL_NAMES = ["aldro", "label_group_dro"]
 SKLEARN_MODEL_NAMES = ("expgrad", "histgbm", "lightgbm", "wcs", "xgb")
 BASELINE_MODEL_NAMES = ["ft_transformer", "mlp", "resnet", "node", "saint",

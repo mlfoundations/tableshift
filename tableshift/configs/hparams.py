@@ -153,6 +153,11 @@ _ft_transformer_search_space = {
     "d_token": tune.choice([64, 128, 256, 512])
 }
 
+_group_dro_ft_transformer_search_space = {
+    **_ft_transformer_search_space,
+    **_group_dro_search_space,
+}
+
 _vrex_search_space = {
     **_DEFAULT_NN_SEARCH_SPACE,
     "vrex_lambda": tune.loguniform(1e-1, 1e5),
@@ -176,6 +181,16 @@ _node_search_space = {
     "total_tree_count": tune.choice([1024, 2048]),
     "depth": tune.choice([6, 8]),  # "tree depth" in A.2.3
     "tree_dim": tune.choice([2, 3])  # "tree output dim" in A.2.3
+}
+
+_group_dro_node_search_space = {
+    **_node_search_space,
+    **_group_dro_search_space,
+}
+
+_group_dro_resnet_search_space = {
+    **_resnet_search_space,
+    **_group_dro_search_space,
 }
 
 _saint_search_space = {
@@ -214,6 +229,9 @@ search_space = {
     "expgrad": _expgrad_search_space,
     "ft_transformer": _ft_transformer_search_space,
     "group_dro": _group_dro_search_space,
+    "group_dro_ft_transformer": _group_dro_ft_transformer_search_space,
+    "group_dro_node": _group_dro_node_search_space,
+    "group_dro_resnet": _group_dro_resnet_search_space,
     "irm": _irm_search_space,
     "label_group_dro": _group_dro_search_space,
     "lightgbm": _lightgbm_search_space,

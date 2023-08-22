@@ -104,6 +104,15 @@ _DEFAULT_CONFIGS = frozendict({
          "hidden_factor": 1,
          "d_main": 128,
          "d_hidden": 256},
+    "group_dro_resnet":
+        {"n_blocks": 2,
+         "dropout_first": 0.2,
+         "dropout_second": 0.,
+         "hidden_factor": 1,
+         "d_main": 128,
+         "d_hidden": 256,
+         "group_weights_step_size": 0.05,
+         },
     "saint":
         {"dim": 8,
          # "depth": 6,
@@ -162,7 +171,7 @@ def get_default_config(model: str, dset: TabularDataset) -> dict:
                                       reg=config["reg"],
                                       geometry=config["geometry"],
                                       max_iter=config["max_iter"])
-    elif model == "group_dro":
+    elif model in ("group_dro", "group_dro_resnet", "group_dro_ft_transformer", "group_dro_node"):
         config["n_groups"] = dset.n_domains
         config["criterion"] = GroupDROLoss(n_groups=dset.n_domains)
 
