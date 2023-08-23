@@ -145,6 +145,15 @@ _DEFAULT_CONFIGS = frozendict({
             "num_layers": 2,
             "total_tree_count": 1024,
         },
+    "group_dro_node":
+        {
+            "batch_size": 256,
+            "tree_dim": 1,
+            "depth": 4,
+            "num_layers": 2,
+            "total_tree_count": 1024,
+            "group_weights_step_size": 0.05,
+        },
     "tabtransformer":
         {"dim": 32,
          "depth": 6,

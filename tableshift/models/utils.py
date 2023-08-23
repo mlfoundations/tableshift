@@ -1,17 +1,18 @@
 import copy
 import logging
 
+import torch
 import xgboost as xgb
 from lightgbm import LGBMClassifier
 from sklearn.ensemble import HistGradientBoostingClassifier
-import torch
 
 from tableshift.models.compat import OPTIMIZER_ARGS
 from tableshift.models.coral import DeepCoralModel, MMDModel
 from tableshift.models.dann import DANNModel
 from tableshift.models.dro import (DomainGroupDROModel,
-                                    DomainGroupDROResNetModel,
-                                    DomainGroupDROFTTransformerModel,
+                                   DomainGroupDROResNetModel,
+                                   DomainGroupDROFTTransformerModel,
+                                   DomainGroupDRONodeModel,
                                    AdversarialLabelDROModel,
                                    LabelGroupDROModel)
 from tableshift.models.expgrad import ExponentiatedGradient
@@ -25,7 +26,7 @@ from tableshift.models.tab_transformer import TabTransformerModel
 from tableshift.models.wcs import WeightedCovariateShiftClassifier
 
 
-def get_estimator(model:str, d_out=1, **kwargs):
+def get_estimator(model: str, d_out=1, **kwargs):
     """
     Fetch an estimator for training.
 
@@ -131,7 +132,7 @@ def get_estimator(model:str, d_out=1, **kwargs):
         tconfig.update({k: kwargs[k] for k in OPTIMIZER_ARGS})
 
         n_groups = kwargs["n_groups"]
-        group_weights_step_size=kwargs["group_weights_step_size"]
+        group_weights_step_size = kwargs["group_weights_step_size"]
 
         tconfig.update({"n_groups": n_groups, "group_weights_step_size": group_weights_step_size})
         assert n_groups > 0, "require nonzero n_groups."
@@ -220,6 +221,16 @@ def get_estimator(model:str, d_out=1, **kwargs):
                          num_layers=kwargs["num_layers"],
                          total_tree_count=kwargs["total_tree_count"],
                          **{k: kwargs[k] for k in OPTIMIZER_ARGS})
+
+    elif model == "group_dro_node":
+        return DomainGroupDRONodeModel(d_in=kwargs["d_in"],
+                                       tree_dim=kwargs["tree_dim"],
+                                       depth=kwargs["depth"],
+                                       num_layers=kwargs["num_layers"],
+                                       total_tree_count=kwargs["total_tree_count"],
+                                       group_weights_step_size=kwargs["group_weights_step_size"],
+                                       n_groups=kwargs["n_groups"],
+                                       **{k: kwargs[k] for k in OPTIMIZER_ARGS})
 
     elif model == "resnet":
         d_hidden = kwargs["d_main"] * kwargs["hidden_factor"]
