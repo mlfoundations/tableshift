@@ -66,6 +66,20 @@ _DEFAULT_CONFIGS = frozendict({
          # This is feature embedding size in Table 13 above.
          "d_token": 64,
          },
+    "group_dro_ft_transformer":
+        {"cat_cardinalities": None,
+         "n_blocks": 1,
+         "residual_dropout": 0.,
+         "attention_dropout": 0.,
+         "ffn_dropout": 0.,
+         "ffn_factor": 1.,
+         # This is feature embedding size in Table 13 above.
+         "d_token": 64,
+         "num_layers": 2,
+         "d_hidden": 256,
+         "group_weights_step_size": 0.05,
+         "dropouts": 0.
+         },
     "group_dro":
         {"num_layers": 2,
          "d_hidden": 256,
@@ -154,7 +168,7 @@ def get_default_config(model: str, dset: TabularDataset) -> dict:
     model_is_pt = is_pytorch_model_name(model)
 
     d_in = dset.X_shape[1]
-    if model_is_pt and model != "ft_transformer":
+    if model_is_pt and "ft_transformer" not in model:
         config.update({"d_in": d_in,
                        "activation": "ReLU"})
     elif model_is_pt:

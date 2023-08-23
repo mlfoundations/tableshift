@@ -4,12 +4,14 @@ import logging
 import xgboost as xgb
 from lightgbm import LGBMClassifier
 from sklearn.ensemble import HistGradientBoostingClassifier
+import torch
 
 from tableshift.models.compat import OPTIMIZER_ARGS
 from tableshift.models.coral import DeepCoralModel, MMDModel
 from tableshift.models.dann import DANNModel
 from tableshift.models.dro import (DomainGroupDROModel,
                                     DomainGroupDROResNetModel,
+                                    DomainGroupDROFTTransformerModel,
                                    AdversarialLabelDROModel,
                                    LabelGroupDROModel)
 from tableshift.models.expgrad import ExponentiatedGradient
@@ -101,6 +103,42 @@ def get_estimator(model:str, d_out=1, **kwargs):
             cat_cardinalities=kwargs["cat_cardinalities"],
             transformer_config=tconfig)
         tconfig.update({k: kwargs[k] for k in OPTIMIZER_ARGS})
+        model.config = copy.deepcopy(tconfig)
+        model._init_optimizer()
+
+        return model
+
+    elif model == "group_dro_ft_transformer":
+        tconfig = FTTransformerModel.get_default_transformer_config()
+
+        tconfig["last_layer_query_idx"] = [-1]
+        tconfig["d_out"] = 1
+        params_to_override = ("n_blocks", "residual_dropout", "d_token",
+                              "attention_dropout", "ffn_dropout")
+        for k in params_to_override:
+            tconfig[k] = kwargs[k]
+
+        tconfig["ffn_d_hidden"] = int(kwargs["d_token"] * kwargs["ffn_factor"])
+
+        # Fixed as in https://arxiv.org/pdf/2106.11959.pdf
+        tconfig['attention_n_heads'] = 8
+
+        # Hacky way to construct a FTTransformer model
+        model = DomainGroupDROFTTransformerModel._make(
+            n_num_features=kwargs["n_num_features"],
+            cat_cardinalities=kwargs["cat_cardinalities"],
+            transformer_config=tconfig)
+        tconfig.update({k: kwargs[k] for k in OPTIMIZER_ARGS})
+
+        n_groups = kwargs["n_groups"]
+        group_weights_step_size=kwargs["group_weights_step_size"]
+
+        tconfig.update({"n_groups": n_groups, "group_weights_step_size": group_weights_step_size})
+        assert n_groups > 0, "require nonzero n_groups."
+        model.group_weights_step_size = torch.Tensor([group_weights_step_size])
+        # initialize adversarial weights
+        model.group_weights = torch.nn.Parameter(
+            torch.full([n_groups], 1. / n_groups))
         model.config = copy.deepcopy(tconfig)
         model._init_optimizer()
 
