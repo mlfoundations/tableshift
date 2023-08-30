@@ -67,3 +67,15 @@ This will create a set of numbered CSV files in the directory specified in `dset
 ``` 
 dset = get_dataset(experiment, cache_dir, use_cached=True)
 ```
+
+## Finding a Suitable Subset for Development
+
+We acknowledge that using the full suite of datasets may not always be practical during initial algorithm development. To address this, if it becomes necessary to select a subset of TableShift benchmark tasks, we encourage users to consider selecting a subset of tasks which shows diversity along the following axes:
+
+* Dataset size
+* Baseline Gap (values shown in TableShift paper, Table 1)
+* Label Shift ($\Delta_y$, values shown in TableShift paper appendix)
+
+Of course, diversity over domain would also be useful (some datasets are drawn from similar sources, such as the various datasets derived from MIMID). We would also suggest choosing publicly available datasets, as these are quickest to get started with.
+
+A subset that seems to meet these criteria might be: *College Scorecard; FICO HELOC; Hospital Readmission; Voting (not publicly available, but easy to access via free/instant account creation); Public Health Insurance*.
