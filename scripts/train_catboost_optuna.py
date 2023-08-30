@@ -37,6 +37,7 @@ def evaluate(model: CatBoostClassifier, X: pd.DataFrame, y: pd.Series,
 
 
 def main(experiment: str, cache_dir: str, results_dir: str, num_samples: int,
+         random_seed:int,
          use_gpu: bool, use_cached: bool):
     start_time = timestamp_as_int()
 
@@ -61,7 +62,7 @@ def main(experiment: str, cache_dir: str, results_dir: str, num_samples: int,
 
             "use_best_model": True,
             "task_type": "GPU" if use_gpu else "CPU",
-            'random_seed': 42
+            'random_seed': random_seed,
         }
 
         model = CatBoostClassifier(**cb_params)
@@ -122,6 +123,7 @@ if __name__ == "__main__":
                         help="where to write results. CSVs will be written to "
                              "experiment-specific subdirectories within this "
                              "directory.")
+    parser.add_argument("--random_seed", default=42, type=int)
     parser.add_argument("--use_cached", default=False, action="store_true",
                         help="whether to use cached data.")
     parser.add_argument("--use_gpu", action="store_true", default=False,
