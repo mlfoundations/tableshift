@@ -1,3 +1,4 @@
+import copy
 import logging
 from typing import Optional, Dict, Any, Union
 
@@ -40,7 +41,7 @@ def get_dataset(name: str, cache_dir: str = "tmp",
 
     expt_config = EXPERIMENT_CONFIGS[name]
     dataset_config = DatasetConfig(cache_dir=cache_dir)
-    tabular_dataset_kwargs = expt_config.tabular_dataset_kwargs
+    tabular_dataset_kwargs = copy.copy(expt_config.tabular_dataset_kwargs)
     if "name" not in tabular_dataset_kwargs:
         tabular_dataset_kwargs["name"] = name
 
@@ -109,7 +110,7 @@ def get_iid_dataset(name: str, cache_dir: str = "tmp",
     expt_config = EXPERIMENT_CONFIGS[name]
     dataset_config = DatasetConfig(cache_dir=cache_dir)
 
-    _tabular_dataset_kwargs = expt_config.tabular_dataset_kwargs
+    _tabular_dataset_kwargs = copy.copy(expt_config.tabular_dataset_kwargs)
     if tabular_dataset_kwargs:
         _tabular_dataset_kwargs.update(tabular_dataset_kwargs)
     if "name" not in _tabular_dataset_kwargs:
