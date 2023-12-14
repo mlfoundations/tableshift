@@ -8,9 +8,6 @@
 
 TableShift is a benchmarking library for machine learning with tabular data under distribution shift. The package is under active development. If you find an issue, please file a GitHub issue in the project repo.
 
-This is an alpha version of TableShift, so the API is **not** guaranteed to
-remain stable (even though we hope it does!).
-
 You can read more about TableShift at [tableshift.org](https://tableshift.org/index.html)
 
 # Quickstart
