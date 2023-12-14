@@ -14,7 +14,7 @@ You can read more about TableShift at [tableshift.org](https://tableshift.org/in
 
 **Environment setup:** We recommend the use of docker with TableShift. Our dataset construction and model pipelines have a diverse set of dependencies that included non-Python files required to make some libraries work. As a result, we recommend you use the provided Docker image for using the benchmark, and suggest forking this Docker image for your own development.
 
-``` 
+```bash 
 # fetch the docker image
 docker pull ghcr.io/jpgard/tableshift:latest
 
@@ -26,11 +26,15 @@ docker run -it --entrypoint=/bin/bash ghcr.io/jpgard/tableshift:latest
 
 ```
 
-**Conda:** To create a conda environment, simply clone this repo, enter the root directory, and run the following commands to create and test a local execution environment:
+**Conda:** We recommend using Docker with TableShift when running training or using any of the pretrained modeling code, as the libraries used for training contain a complex and subtle set of dependencies that can be difficult to configure outside Docker. However, Conda might provide a more lightweight environment for basic development and exploration with TableShift, so we describe how to set up Conda here. 
 
-``` 
+To create a conda environment, simply clone this repo, enter the root directory, and run the following commands to create and test a local execution environment:
+
+```bash
+# set up the environment
 conda env create -f environment.yml
 conda activate tableshift
+# test the install by running the training script
 python examples/run_expt.py
 ```
 
@@ -39,7 +43,7 @@ The final line above will print some detailed logging output as the script execu
 **Accessing datasets:** If you simply want to load and use a standard version of
 one of the public TableShift datasets, it's as simple as:
 
-``` 
+```python
 from tableshift import get_dataset
 
 dataset_name = "diabetes_readmission"
@@ -54,7 +58,7 @@ The call to `get_dataset()` returns a `TabularDataset` that you can use to
 easily load tabular data in several formats, including Pandas DataFrame and
 PyTorch DataLoaders:
 
-``` 
+```python
 # Fetch a pandas DataFrame of the training set
 X_tr, y_tr, _, _ = dset.get_pandas("train")
 
@@ -138,7 +142,7 @@ TableShift paper; we provide a summary below.
 
 A sample training script is located at `examples/run_expt.py`. However, training a scikit-learn model is as simple as:
 
-``` 
+```python
 from tableshift import get_dataset
 from sklearn.ensemble import GradientBoostingClassifier
 
