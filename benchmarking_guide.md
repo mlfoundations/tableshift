@@ -2,7 +2,7 @@
 
 `tableshift` seeks to support a wide range of supervised learning algorithms. Benchmark data is available in a variety of formats used by common learning frameworks (Pandas `DataFrame`s, Torch `DataLoader`s, and even Ray Datasets) and is serializable to disk so that preprocessing need only happen once.
 
-This page provides a walkthrough for bennchmarking an algorithm on the TableShift benchmark.
+This page provides a walkthrough for benchmarking an algorithm on the TableShift benchmark.
 
 ## Setup
 
