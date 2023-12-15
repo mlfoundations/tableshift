@@ -6,9 +6,11 @@
 
 # TableShift
 
-TableShift is a benchmarking library for machine learning with tabular data under distribution shift. The package is under active development. If you find an issue, please file a GitHub issue in the project repo.
+TableShift is a benchmarking library for machine learning with tabular data under distribution shift.
 
-You can read more about TableShift at [tableshift.org](https://tableshift.org/index.html)
+You can read more about TableShift at [tableshift.org](https://tableshift.org/index.html) or read the full paper (published in NeurIPS 2023 Datasets & Benchmarks Track) on [arxiv](https://arxiv.org/abs/2312.07577).
+
+If you find an issue, please file a GitHub [issue](https://github.com/mlfoundations/tableshift/issues/new/choose).
 
 # Quickstart
 
