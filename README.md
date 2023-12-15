@@ -8,7 +8,16 @@
 
 TableShift is a benchmarking library for machine learning with tabular data under distribution shift.
 
-You can read more about TableShift at [tableshift.org](https://tableshift.org/index.html) or read the full paper (published in NeurIPS 2023 Datasets & Benchmarks Track) on [arxiv](https://arxiv.org/abs/2312.07577).
+You can read more about TableShift at [tableshift.org](https://tableshift.org/index.html) or read the full paper (published in NeurIPS 2023 Datasets & Benchmarks Track) on [arxiv](https://arxiv.org/abs/2312.07577). If you use the benchmark in your research, please cite the paper:
+
+```
+@article{gardner2023tableshift,
+  title={Benchmarking Distribution Shift in Tabular Data with TableShift},
+  author={Gardner, Josh and Popovic, Zoran and Schmidt, Ludwig},
+  journal={Advances in Neural Information Processing Systems},
+  year={2023}
+}
+```
 
 If you find an issue, please file a GitHub [issue](https://github.com/mlfoundations/tableshift/issues/new/choose).
 
