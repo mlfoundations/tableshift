@@ -11,6 +11,8 @@ For more information on datasets and access in TableShift, see:
 """
 import json
 import os
+import re
+from typing import Dict
 
 import pandas as pd
 from tableshift.core.features import Feature, FeatureList, cat_dtype
@@ -34,18 +36,104 @@ DIABETES_MEDICATION_FEAT_DESCRIPTION = """Indicates if there was any diabetic
     decreased, 'steady' if the dosage did not change, and 'no' if the drug 
     was not prescribed."""
 
+# These codes are missing from the list we used.
+SUPERFICIAL_INJURY_ICD9_CODES = {
+    "910": "Superficial injury of face, neck, and scalp except eye",
+    "911": "Superficial injury of trunk",
+    "912": "Superficial injury of shoulder and upper arm",
+    "913": "Superficial injury of elbow, forearm, and wrist",
+    "914": "Superficial injury of hand(s) except finger(s) alone",
+    "915": " Superficial injury of finger(s)",
+    "916": "Superficial injury of hip, thigh, leg, and ankle",
+    "917": "Superficial injury of foot and toe(s)",
+    "918": "Superficial injury of eye and adnexa",
+    "919": "Superficial injury of other, multiple, and unspecified sites",
+    "919.0": "Abrasion or friction burn of other multiple and unspecified sites without infection",
+    "919.1": "Abrasion or friction burn of other multiple and unspecified sites infected",
+    "919.2": "Blister of other multiple and unspecified sites without infection",
+    "919.3": "Blister of other multiple and unspecified sites infected",
+    "919.4": "Insect bite nonvenomous of other multiple and unspecified sites without infection",
+    "919.5": "Insect bite nonvenomous of other multiple and unspecified sites infected",
+    "919.6": "Superficial foreign body (splinter) of other multiple and unspecified sites without major open wound and without infection",
+    "919.7": "Superficial foreign body (splinter) of other multiple and unspecified sites without major open wound infected",
+    "919.8": "Other and unspecified superficial injury of other multiple and unspecified sites without infection",
+    "919.9": "Other and unspecified superficial injury of other multiple and unspecified sites infected",
+}
 
-def get_icd9(depth=3) -> dict:
-    """Fetch a dictionary mapping ICD9 codes to string descriptors."""
+
+def _diabetes_icd9_codes() -> Dict[str, str]:
+    # See https://en.wikipedia.org/wiki/List_of_ICD-9_codes_240–279:_endocrine,_nutritional_and_metabolic_diseases,_and_immunity_disorders
+    # First digit of decimal
+    first_decimal_codes = {0: 'without mention of complication',
+                           1: 'with ketoacidosis',
+                           2: 'with hyperosmolarity',
+                           3: 'with other coma',
+                           4: 'with renal manifestations',
+                           5: 'with ophthalmic manifestations',
+                           6: 'with neurological manifestations',
+                           7: 'with peripheral circulatory disorders',
+                           8: 'with other specified manifestations',
+                           9: 'with unspecified complication',
+                           }
+
+    # Second digit of decimal
+    second_decimal_codes = {
+        # (250.x0) Diabetes mellitus type 2
+        0: 'Diabetes mellitus type 2',
+        # (250.x1) Diabetes mellitus type 1
+        1: 'Diabetes mellitus type 1',
+        # (250.x2) Diabetes mellitus type 2, uncontrolled
+        2: 'Diabetes mellitus type 2, uncontrolled',
+        # (250.x3) Diabetes mellitus type 1, uncontrolled
+        3: 'Diabetes mellitus type 1, uncontrolled',
+    }
+    diabetes_codes_mapping = {}
+    for first_decimal, desc in first_decimal_codes.items():
+        for second_decimal, diabetes_type in second_decimal_codes.items():
+            code = f'250.{first_decimal}{second_decimal}'
+            desc = ' '.join((diabetes_type, desc))
+            diabetes_codes_mapping[code] = desc
+    return diabetes_codes_mapping
+
+
+def get_icd9(depths=(3, 4)) -> dict:
+    """Fetch a dictionary mapping ICD9 codes to string descriptors.
+
+    Also applies some preprocessing (dropping leading zeros) to match the format used in diabetes dataset.
+    Additionally, since the dataset uses depth-3 codes for non-diabetes diagnoses, but depth-4
+    codes for diabetes diagnosis (i.e. 250.x), we take the union of both depths such that
+    every code present in the dataset is mapped.
+    """
     # via https://raw.githubusercontent.com/sirrice/icd9/master/codes.json
     fp = os.path.join(os.path.dirname(__file__), "./icd9-codes.json")
     with open(fp, "r") as f:
         raw = f.read()
     icd9_codes = json.loads(raw)
-    depth_mapping = {c["code"]: c["descr"]
-                     for group in icd9_codes for c in group
-                     if c['depth'] == depth}
-    return depth_mapping
+
+    def _preprocess_code_text(x: str) -> str:
+        # Drop any leading zeros in codes
+        try:
+            return re.sub("^0+", "", x)
+        except:
+            import ipdb;
+            ipdb.set_trace()
+
+    mapping = {}
+    for depth in depths:
+        depth_mapping = {_preprocess_code_text(c["code"]): c["descr"]
+                         for group in icd9_codes for c in group
+                         if c['depth'] == depth}
+        mapping.update(depth_mapping)
+    # Add the detailed diabetes codes; these are also used in this dataset for diabetes only.
+    diabetes_icd9_codes = _diabetes_icd9_codes()
+    mapping.update(diabetes_icd9_codes)
+    mapping.update(SUPERFICIAL_INJURY_ICD9_CODES)
+    mapping.update({"235": "Neoplasm of uncertain behavior of digestive and respiratory systems",
+                    "365.44": "Glaucoma associated with congenital anomalies, with dystrophies and with systemic syndromes",
+                    "752": "Congenital anomalies of genital organs",
+                    "E849": "Place of occurrence at Home",
+                    "nan": "Not entered, unknown or missing"})
+    return mapping
 
 
 # Note: the UCI version of this dataset does *not* exactly correspond to the
