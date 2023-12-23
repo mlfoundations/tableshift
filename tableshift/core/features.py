@@ -250,10 +250,20 @@ class PreprocessorConfig:
     n_bins: int = 5  # see KBinsDiscretizer.num_bins
 
 
-def map_values(df: pd.DataFrame, mapping: dict) -> pd.DataFrame:
+def map_values(df: pd.DataFrame, mapping: dict, strict=True) -> pd.DataFrame:
+    """Apply mapping to a column."""
     column = df.stack()
     unmapped_values = list(set(column.unique()) - set(mapping.keys()))
-    if unmapped_values:
+
+    if unmapped_values and strict:
+        # Case: there are unmapped values; raise an error in 'strict' mode.
+        raise ValueError(
+            f"Got the following unmapped values for column with first rows {column.head()}: {unmapped_values}."
+        "If this is intended (and you want these values mapped to None), set strict=False. If you"
+            "want these values mapped to themselves (identity mapping), explicitly specify this"
+            "in your mapping, or set map_values=False.")
+    elif unmapped_values:
+        # Case: there are unmapped values but not in 'strict' mode; raise a warning.
         logging.warning(
             f'got value(s) in column {df.columns[0]} with no'
             f'mapping: {unmapped_values}; will pass these values through '
