@@ -230,7 +230,7 @@ CREDIT_FEATURES = FeatureList(features=[
     Feature('NumberOfTime30-59DaysPastDueNotWorse', int,
             name_extended='number of times between 30 and 59 days past due'),
     Feature('NumberOfTime60-89DaysPastDueNotWorse', int,
-            name_extended='numer of time between 60 and 89 days past due'),
+            name_extended='number of times between 60 and 89 days past due'),
     Feature('NumberOfTimes90DaysLate', int,
             name_extended='number of times 90 days late'),
     Feature('DebtRatio', float, name_extended='debt ratio'),
@@ -238,7 +238,7 @@ CREDIT_FEATURES = FeatureList(features=[
     Feature('NumberOfOpenCreditLinesAndLoans', int,
             name_extended='number of open credit lines and loans'),
     Feature('NumberRealEstateLoansOrLines', int,
-            name_extended='numer of real estate loans or lines'),
+            name_extended='number of real estate loans or lines'),
     Feature('NumberOfDependents', int, name_extended='number of dependents'),
 ])
 
