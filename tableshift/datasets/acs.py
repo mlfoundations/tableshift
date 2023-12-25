@@ -120,7 +120,7 @@ ENG_FEATURE = Feature('ENG', cat_dtype, "Ability to speak English",
 
 MIG_FEATURE = Feature('MIG', cat_dtype,
                       "Mobility status (lived here 1 year ago)",
-                      name_extended="Mobility status",
+                      name_extended="Mobility status (whether respondent lived here 1 year ago)",
                       value_mapping={'00': 'N/A (less than 1 year old)',
                                      '01': 'Yes, same house(nonmovers)',
                                      '02': 'No, outside US and Puerto Rico',
