@@ -102,9 +102,16 @@ GERMAN_FEATURES = FeatureList(features=[
                           "applicants",
             value_mapping={
                 1: "greater than or equal to median age",
-                0: "not greater than or equal to median age"
+                '1.0': "greater than or equal to median age",
+                0: "not greater than or equal to median age",
+                '0.0': "not greater than or equal to median age"
             }),
-    Feature("sex", cat_dtype, value_mapping={1: "male", 0: "female"}),
+    Feature("sex", cat_dtype, value_mapping={
+        1: "male",
+        '1.0': "male",
+        0: "female",
+        '0.0': "female",
+    }),
     Feature("other_installment", cat_dtype,
             description="Other installment plans",
             name_extended="Other installment plans",

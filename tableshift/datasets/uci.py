@@ -205,10 +205,10 @@ CAR_FEATURES = FeatureList(features=[
     Feature('buying', cat_dtype, name_extended='buying price'),
     Feature('maint', cat_dtype, name_extended='maintenance price'),
     Feature('doors', cat_dtype, name_extended='number of doors'),
-    Feature('persons', cat_dtype),
+    Feature('persons', cat_dtype, name_extended='capacity in terms of persons to carry'),
     Feature('lug_boot', cat_dtype,
-            name_extended='capacity in terms of persons'),
-    Feature('safety', cat_dtype, name_extended='safety level'),
+            name_extended='the size of luggage boot'),
+    Feature('safety', cat_dtype, name_extended='estimated safety level of the car'),
     Feature('class', cat_dtype, is_target=True,
             name_extended='car acceptability',
             value_mapping={
