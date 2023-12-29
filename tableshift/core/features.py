@@ -540,6 +540,11 @@ class Preprocessor:
         if self.config.numeric_features == "passthrough":
             passthrough_columns += get_numeric_columns(data)
 
+        elif self.config.numeric_features == "map_values":
+            # add any unmapped numeric columns
+            unmapped_numerics = [f for f in get_numeric_columns(data) if self.feature_list[f].value_mapping is None]
+            passthrough_columns += unmapped_numerics
+
         if self.config.categorical_features == "passthrough":
             passthrough_columns += get_categorical_columns(data)
 
@@ -550,7 +555,8 @@ class Preprocessor:
             passthrough_columns.append(domain_label_colname)
         if not self.config.map_targets:
             passthrough_columns.append(target_colname)
-        return passthrough_columns
+
+        return list(set(passthrough_columns))
 
     def map_names_extended(self, colnames: List[str]) -> List[str]:
         """Map the original feature names to any extended feature names."""
