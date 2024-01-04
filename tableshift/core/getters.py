@@ -2,6 +2,7 @@ import copy
 import logging
 from typing import Optional, Dict, Any, Union
 
+from tableshift import exceptions
 from tableshift.configs.experiment_defaults import DEFAULT_RANDOM_STATE
 from tableshift.configs.benchmark_configs import BENCHMARK_CONFIGS
 from tableshift.configs.non_benchmark_configs import NON_BENCHMARK_CONFIGS
@@ -35,9 +36,10 @@ def get_dataset(name: str, cache_dir: str = "tmp",
         kwargs: optional kwargs to be passed to TabularDataset; these will
             override their respective kwargs in the experiment config.
         """
-    assert name in EXPERIMENT_CONFIGS.keys(), \
-        f"Dataset name {name} is not available; choices are: " \
-        f"{sorted(EXPERIMENT_CONFIGS.keys())}"
+    if name not in EXPERIMENT_CONFIGS.keys():
+        raise exceptions.ConfigNotFoundException(
+            f"Dataset name {name} is not available; choices are: " \
+        f"{sorted(EXPERIMENT_CONFIGS.keys())}")
 
     expt_config = EXPERIMENT_CONFIGS[name]
     dataset_config = DatasetConfig(cache_dir=cache_dir)
@@ -103,9 +105,10 @@ def get_iid_dataset(name: str, cache_dir: str = "tmp",
         kwargs: optional kwargs to be passed to TabularDataset; these will
             override their respective kwargs in the experiment config.
         """
-    assert name in EXPERIMENT_CONFIGS.keys(), \
-        f"Dataset name {name} is not available; choices are: " \
-        f"{sorted(EXPERIMENT_CONFIGS.keys())}"
+    if name not in EXPERIMENT_CONFIGS.keys():
+        raise exceptions.ConfigNotFoundException(
+            f"Dataset name {name} is not available; choices are: "
+            f"{sorted(EXPERIMENT_CONFIGS.keys())}")
 
     expt_config = EXPERIMENT_CONFIGS[name]
     dataset_config = DatasetConfig(cache_dir=cache_dir)
