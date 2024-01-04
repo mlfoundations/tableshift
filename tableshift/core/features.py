@@ -1,3 +1,5 @@
+import copy
+import json
 import logging
 from dataclasses import dataclass, field
 from functools import partial
@@ -6,10 +8,10 @@ from typing import List, Any, Sequence, Optional, Mapping, Tuple, Union, Dict
 import numpy as np
 import pandas as pd
 from pandas.api.types import CategoricalDtype as cat_dtype
+from pandas.api.types import is_object_dtype, is_float_dtype, is_integer_dtype, is_categorical_dtype
 from sklearn.compose import ColumnTransformer, make_column_selector
 from sklearn.preprocessing import OneHotEncoder, StandardScaler, LabelEncoder, \
     FunctionTransformer, OrdinalEncoder
-
 from tableshift.core.discretization import KBinsDiscretizer
 from tableshift.core.utils import sub_illegal_chars
 
@@ -55,6 +57,17 @@ def column_is_of_type(x: pd.Series, dtype) -> bool:
         # dtype; this will not perform casting of identical subtypes (i.e.
         # does not cast int64 to int).
         return np.issubdtype(x.dtype, dtype)
+
+
+def get_dtype(dtype):
+    if is_categorical_dtype(dtype) or is_object_dtype(dtype):
+        return cat_dtype
+    elif is_integer_dtype(dtype):
+        return int
+    elif is_float_dtype(dtype):
+        return float
+    else:
+        raise ValueError(f"unknown dtype: {dtype}")
 
 
 @dataclass(frozen=True)
@@ -103,6 +116,59 @@ class Feature:
 class FeatureList:
     features: List[Feature]
     documentation: str = None  # optional link to docs
+
+    @classmethod
+    def from_dataframe(cls, df: pd.DataFrame, target_colname: str,
+                       names_extended: Dict[Any, str] = None,
+                       value_mapping: Dict[Any, Dict] = None,
+                       **kwargs):
+        if names_extended is None:
+            names_extended = {}
+        if value_mapping is None:
+            value_mapping = {}
+        assert target_colname in df.columns, \
+            f"target colname {target_colname} not in columns {df.columns}"
+
+        dtypes = df.dtypes.to_dict()
+        features = [Feature(name,
+                            get_dtype(dtype),
+                            is_target=name == target_colname,
+                            name_extended=names_extended.get(name),
+                            value_mapping=value_mapping.get(name))
+                    for name, dtype in dtypes.items()]
+
+        return cls(features=features, **kwargs)
+
+    def to_jsonl(self, file: str):
+        with open(file, "w") as f:
+            for feature in self.features:
+                output_dict = copy.deepcopy(feature.__dict__)
+                kind = output_dict.pop('kind')
+                kind_str = getattr(kind, "name", kind.__name__)
+                output_dict['kind'] = kind_str
+                f.write(json.dumps(output_dict) + "\n")
+
+    @classmethod
+    def from_jsonl(cls, file: str):
+        with open(file, "r") as f:
+            lines = f.readlines()
+        feature_dicts = [json.loads(l) for l in lines]
+
+        # For each element in feature_dicts, create the actual class object
+        # corresponding to the feature kind, from its string representation.
+
+        for i in range(len(feature_dicts)):
+            kind = feature_dicts[i]['kind']
+            if kind in ('float', 'int'):
+                feature_dicts[i]['kind'] = eval(kind)
+            elif kind == "category":
+                feature_dicts[i]['kind'] = cat_dtype
+            else:
+                print(f"unexpected kind: {kind}")
+                import ipdb;
+                ipdb.set_trace()
+        features = [Feature(**feature_dict) for feature_dict in feature_dicts]
+        return cls(features=features)
 
     @property
     def predictors(self) -> List[str]:
@@ -259,7 +325,7 @@ def map_values(df: pd.DataFrame, mapping: dict, strict=True) -> pd.DataFrame:
         # Case: there are unmapped values; raise an error in 'strict' mode.
         raise ValueError(
             f"Got the following unmapped values for column with first rows {column.head()}: {unmapped_values}."
-        "If this is intended (and you want these values mapped to None), set strict=False. If you"
+            "If this is intended (and you want these values mapped to None), set strict=False. If you"
             "want these values mapped to themselves (identity mapping), explicitly specify this"
             "in your mapping, or set map_values=False.")
     elif unmapped_values:
