@@ -8,7 +8,7 @@ from typing import List, Any, Sequence, Optional, Mapping, Tuple, Union, Dict
 import numpy as np
 import pandas as pd
 from pandas.api.types import CategoricalDtype as cat_dtype
-from pandas.api.types import is_object_dtype, is_float_dtype, is_integer_dtype, is_categorical_dtype
+from pandas.api.types import is_object_dtype, is_float_dtype, is_integer_dtype, is_categorical_dtype, is_bool_dtype
 from sklearn.compose import ColumnTransformer, make_column_selector
 from sklearn.preprocessing import OneHotEncoder, StandardScaler, LabelEncoder, \
     FunctionTransformer, OrdinalEncoder
@@ -66,6 +66,8 @@ def get_dtype(dtype):
         return int
     elif is_float_dtype(dtype):
         return float
+    elif is_bool_dtype(dtype):
+        return bool
     else:
         raise ValueError(f"unknown dtype: {dtype}")
 
