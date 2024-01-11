@@ -262,7 +262,7 @@ DEFAULT_OF_CREDIT_CLIENTS_FEATURES = FeatureList(features=[
             'Amount of the given credit (NT dollar): it includes both the individual consumer credit and his/her family (supplementary) credit.',
             name_extended='total credit amount in NT dollars'),
     Feature('x2', int, 'gender', name_extended='gender',
-            value_mapping={1: 'male', 2: 'female'}),
+            value_mapping={0: 'male', 1: 'female'}),
     Feature('x5', int, 'age', name_extended='age in years'),
     Feature('x6', float, name_extended='repayment status in September 2005',
             value_mapping=PAYMENT_STATUS_MAPPING),
