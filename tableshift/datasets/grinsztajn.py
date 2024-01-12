@@ -936,25 +936,26 @@ JANNIS_FEATURES = FeatureList(features=[
                  "https://link.springer.com/chapter/10.1007/978-3-030-05318-5_10")
 
 HOUSE_16H_FEATURES = FeatureList([
-    Feature('P1', float),
-    Feature('P5p1', float),
-    Feature('P6p2', float),
-    Feature('P11p4', float),
-    Feature('P14p9', float),
-    Feature('P15p1', float),
-    Feature('P15p3', float),
-    Feature('P16p2', float),
-    Feature('P18p2', float),
-    Feature('P27p4', float),
-    Feature('H2p2', float),
-    Feature('H8p2', float),
-    Feature('H10p1', float),
-    Feature('H13p1', float),
-    Feature('H18pA', float),
-    Feature('H40p4', float),
+    Feature('P1', float, name_extended="total persons count in the region"),
+    Feature('P5p1', float, name_extended="percentage of males"),
+    Feature('P6p2', float, name_extended="percentage of black people"),
+    Feature('P11p4', float, name_extended="percentage over 64 years old"),
+    Feature('P14p9', float, name_extended="percentage widowed females"),
+    Feature('P15p1', float, name_extended="percentage of people in family households"),
+    Feature('P15p3', float, name_extended="percentage of people in group quarters (including jails)"),
+    Feature('P16p2', float, name_extended="percentage of households with 2 or more persons which are family households"),
+    Feature('P18p2', float, name_extended="percentage of households with 1+ persons under 18 which are non-family households"),
+    Feature('P27p4', float, name_extended="percentage of households which are non-family with 2+ persons"),
+    Feature('H2p2', float, name_extended="percentage of housing units vacant"),
+    Feature('H8p2', float, name_extended="percentage of occupied housing units with black householder"),
+    Feature('H10p1', float, name_extended="percentage of occupied housing units with householder not of Hispanic origin"),
+    Feature('H13p1', float, name_extended="percentage of housing units with 1-4 rooms"),
+    Feature('H18pA', float, name_extended="average number of persons per owner-occupied housing units"),
+    Feature('H40p4', float, name_extended="percentage of vacant-for-sale housing units vacant more then 6 months"),
     Feature('binaryClass', int, is_target=True, name_extended='class label'),
 ], documentation="https://www.openml.org/d/44123 , "
-                 "https://www.openml.org/search?type=data&status=active&id=574&sort=runs")
+                 "https://www.openml.org/search?type=data&status=active&id=574&sort=runs ,"
+                 "http://www.cs.toronto.edu/~delve/data/census-house/censusDetail.html")
 
 
 def preprocess_binaryclass_np_label(df: pd.DataFrame) -> pd.DataFrame:
