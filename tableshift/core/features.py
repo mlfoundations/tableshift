@@ -1,6 +1,7 @@
 import copy
 import json
 import logging
+import os
 from dataclasses import dataclass, field
 from functools import partial
 from typing import List, Any, Sequence, Optional, Mapping, Tuple, Union, Dict
@@ -72,6 +73,19 @@ def get_dtype(dtype):
         raise ValueError(f"unknown dtype: {dtype}")
 
 
+def cast_number(number_str: str):
+    try:
+        # Try to convert to integer
+        return int(number_str)
+    except ValueError:
+        try:
+            # If integer conversion fails, try to convert to float
+            return float(number_str)
+        except ValueError:
+            # If both conversions fail, return the original string
+            return number_str
+
+
 @dataclass(frozen=True)
 class Feature:
     name: str
@@ -141,20 +155,45 @@ class FeatureList:
 
         return cls(features=features, **kwargs)
 
-    def to_jsonl(self, file: str):
-        with open(file, "w") as f:
-            for feature in self.features:
-                output_dict = copy.deepcopy(feature.__dict__)
-                kind = output_dict.pop('kind')
-                kind_str = getattr(kind, "name", kind.__name__)
-                output_dict['kind'] = kind_str
-                f.write(json.dumps(output_dict) + "\n")
+    def to_jsonl(self, file):
+        """Write to a jsonl file. File can either be a sting path to a file, or a handle-like object."""
+        if isinstance(file, str):
+            # Case: file is a string; open handle to a file object at this path.
+            with open(file, "w") as f:
+                for feature in self.features:
+                    output_dict = copy.deepcopy(feature.__dict__)
+                    kind = output_dict.pop('kind')
+                    kind_str = getattr(kind, "name", kind.__name__)
+                    output_dict['kind'] = kind_str
+                    f.write(json.dumps(output_dict) + "\n")
+        else:
+            # Case: file is a handle; try to write to it directly.
+            try:
+                for feature in self.features:
+                    output_dict = copy.deepcopy(feature.__dict__)
+                    kind = output_dict.pop('kind')
+                    kind_str = getattr(kind, "name", kind.__name__)
+                    output_dict['kind'] = kind_str
+                    line = json.dumps(output_dict) + "\n"
+                    file.write(line.encode())
+            except Exception as e:
+                logging.error(f"error writing to file {file} of type {type(file)}")
+                raise e
 
     @classmethod
-    def from_jsonl(cls, file: str):
+    def from_jsonl(cls, file: str, auto_cast_value_mappings: bool = False):
+        assert os.path.exists(file), f"file {file} does not exist."
         with open(file, "r") as f:
             lines = f.readlines()
         feature_dicts = [json.loads(l) for l in lines]
+
+        # JSON parsing automatically casts any int/float keys to string; if auto_cast_value_mapping
+        # is True, we attempt to recover these.
+        if auto_cast_value_mappings:
+            for feature_dict in feature_dicts:
+                if feature_dict['value_mapping']:
+                    feature_dict['value_mapping'] = {cast_number(k): cast_number(v) for k, v in
+                                                     feature_dict['value_mapping'].items()}
 
         # For each element in feature_dicts, create the actual class object
         # corresponding to the feature kind, from its string representation.

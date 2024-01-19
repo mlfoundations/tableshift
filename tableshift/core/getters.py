@@ -2,6 +2,8 @@ import copy
 import logging
 from typing import Optional, Dict, Any, Union
 
+from tableshift.core.tasks import _TASK_REGISTRY
+from tableshift.core.data_source import DataSource
 from tableshift import exceptions
 from tableshift.configs.experiment_defaults import DEFAULT_RANDOM_STATE
 from tableshift.configs.benchmark_configs import BENCHMARK_CONFIGS
@@ -15,6 +17,12 @@ EXPERIMENT_CONFIGS = {
     **NON_BENCHMARK_CONFIGS
 }
 
+def get_data_source(name:str, cache_dir:str, download=True, **kwargs) -> DataSource:
+    """Get the data source for a dataset, if it exists in the task registry."""
+    if name not in _TASK_REGISTRY:
+        raise ValueError(f"Dataset '{name}' not in available task registry: {sorted(_TASK_REGISTRY.keys())}")
+    task_config = _TASK_REGISTRY[name]
+    return task_config.data_source_cls(cache_dir=cache_dir, download=download, **kwargs)
 
 def get_dataset(name: str, cache_dir: str = "tmp",
                 preprocessor_config: Optional[

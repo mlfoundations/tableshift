@@ -7,7 +7,7 @@ the tableshift benchmark.
 """
 
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Dict
 from .data_source import *
 from .features import FeatureList
 
@@ -25,10 +25,11 @@ class TaskConfig:
     feature_list: FeatureList
 
 
+
 # Mapping of task names to their configs. An arbitrary number of tasks
 # can be created from a single data source, by specifying different
 # preprocess_fn and features.
-_TASK_REGISTRY = {
+_TASK_REGISTRY: Dict[str, TaskConfig] = {
     "acsincome":
         TaskConfig(ACSDataSource,
                    ACS_INCOME_FEATURES + ACS_SHARED_FEATURES),

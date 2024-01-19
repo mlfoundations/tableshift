@@ -130,6 +130,9 @@ class Dataset(ABC):
         """Fetch a list of the feature names."""
         raise
 
+    def _get_info(self) -> Dict[str, Any]:
+        raise
+
     def _check_split(self, split):
         """Check that a split name is valid."""
         assert self._is_valid_split(split), \
