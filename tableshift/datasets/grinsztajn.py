@@ -539,8 +539,8 @@ ROAD_SAFETY_FEATURES = FeatureList(features=[
     Feature('Was_Vehicle_Left_Hand_Drive?', int,
             name_extended='indicator for whether vehicle was left-hand drive',
             value_mapping={
+                0: 'Yes',
                 1: 'No',
-                2: 'Yes',
                 9: 'Unknown',
                 -1: 'Data missing or out of range'}),
     Feature('Age_of_Driver', int,
