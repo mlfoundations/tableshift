@@ -44,10 +44,11 @@ AMAZON_FEATURES = FeatureList(features=[
     Feature('ROLE_CODE', int,
             'Company role code; this code is unique to each role (e.g. Manager)',
             name_extended='company role code'),
-], documentation="https://www.kaggle.com/c/amazon-employee-access-challenge")
+], documentation="https://www.kaggle.com/c/amazon-employee-access-challenge/overview , "
+                 "https://www.kaggle.com/c/amazon-employee-access-challenge/data")
 
 APPETENCY_FEATURES = FeatureList(features=[
-    Feature('label', float, name_extended='class label', is_target=True),
+    Feature('label', float, name_extended='user will buy new products or services (appetency)', is_target=True),
     Feature('Var202', cat_dtype),  # importance: 0.0881
     Feature('Var220', cat_dtype),  # importance: 0.0622
     Feature('Var218', cat_dtype),  # importance: 0.0532
@@ -175,7 +176,7 @@ APPETENCY_FEATURES = FeatureList(features=[
                  'https://medium.com/@kushaldps1996/customer-relationship-prediction-kdd-cup-2009-6b57d08ffb0')
 
 CHURN_FEATURES = FeatureList(features=[
-    Feature('label', float, name_extended='class label', is_target=True),
+    Feature('label', float, name_extended='customer will switch provider (churn)', is_target=True),
     Feature('Var202', cat_dtype),  # importance: 0.1061
     Feature('Var222', cat_dtype),  # importance: 0.0707
     Feature('Var220', cat_dtype),  # importance: 0.0699
@@ -303,7 +304,7 @@ CHURN_FEATURES = FeatureList(features=[
                  'https://medium.com/@kushaldps1996/customer-relationship-prediction-kdd-cup-2009-6b57d08ffb0')
 
 UPSELLING_FEATURES = FeatureList(features=[
-    Feature('label', float, name_extended='class label', is_target=True),
+    Feature('label', float, name_extended='customer will buy upgrades or add-ons proposed to them to make the sale more profitable (up-selling)', is_target=True),
     Feature('Var126', float),  # importance: 0.1205
     Feature('Var202', cat_dtype),  # importance: 0.0812
     Feature('Var198', cat_dtype),  # importance: 0.0687
@@ -507,7 +508,8 @@ KICK_FEATURES = FeatureList(features=[
             name_extended='vehicle was originally purchased online'),
     Feature('WarrantyCost', int,
             name_extended='Warranty price (with term=36 month and mileage=36K)'),
-], documentation="https://www.kaggle.com/competitions/DontGetKicked/data")
+], documentation="https://www.kaggle.com/competitions/DontGetKicked/ , "
+                 "https://www.kaggle.com/competitions/DontGetKicked/data")
 
 
 def preprocess_kick(df: DataFrame) -> DataFrame:

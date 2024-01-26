@@ -764,6 +764,7 @@ class ClickDataSource(KaggleCompetitionDataSource):
 class KddCup2009DataSource(DataSource):
     def __init__(self, task_name: str, **kwargs):
         self.task_name = task_name
+        self.name = task_name
         _resources = [
             "https://kdd.org/cupfiles/KDDCupData/2009/orange_small_train.data.zip",
             f"http://www.kdd.org/cupfiles/KDDCupData/2009/orange_small_train_{task_name}.labels",
