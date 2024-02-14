@@ -200,14 +200,13 @@ class FeatureList:
 
         for i in range(len(feature_dicts)):
             kind = feature_dicts[i]['kind']
-            if kind in ('float', 'int'):
+            if kind in ('float', 'int', 'bool'):
                 feature_dicts[i]['kind'] = eval(kind)
             elif kind == "category":
                 feature_dicts[i]['kind'] = cat_dtype
             else:
-                print(f"unexpected kind: {kind}")
-                import ipdb;
-                ipdb.set_trace()
+                raise ValueError(f"unexpected kind: {kind}")
+
         features = [Feature(**feature_dict) for feature_dict in feature_dicts]
         return cls(features=features)
 
