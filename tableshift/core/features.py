@@ -354,6 +354,7 @@ class PreprocessorConfig:
     min_frequency: float = None  # see OneHotEncoder.min_frequency
     max_categories: int = None  # see OneHotEncoder.max_categories
     n_bins: int = 5  # see KBinsDiscretizer.num_bins
+    sub_illegal_chars: bool=True  # whether to replace illegal characters in column names
 
 
 def map_values(df: pd.DataFrame, mapping: dict, strict=True) -> pd.DataFrame:
@@ -581,7 +582,7 @@ class Preprocessor:
         if self.config.use_extended_names:
             transformed.columns = self.map_names_extended(
                 transformed.columns.tolist())
-        else:
+        elif self.config.sub_illegal_chars:
             transformed.columns = [sub_illegal_chars(c) for c in
                                    transformed.columns]
 
